@@ -7,3 +7,7 @@
 
 
 *post request
+ * write post routes and test with postman
+ * use a form to send post request
+ * use body parser to get form data
+ 

@@ -1,6 +1,8 @@
 var express = require("express");
 var app = express();
+var bodyParser = require("body-parser");
 
+app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 
@@ -13,19 +15,19 @@ app.get("/fallinlovewith/:thing", function(req,res) {
     res.render("love", {thingVar : thing});
 });
 
+var posts = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+      
 app.get("/posts", function(req,res) {
     
      console.log("The posts page has started!")
-    var posts = [
-        {title:"post1", author:"Monday"},
-        {title:"post2", author:"Tuesday"},
-        {title:"post3", author:"Wednesday"},
-        {title:"post4", author:"Thursday"},
-        {title:"post5", author:"Friday"},
-        {title:"post6", author:"Saturday"},
-        {title:"post7", author:"Sunday"},
-      ];
+    
       res.render("posts", {posts: posts});
+});
+
+app.post("/addpost", function(req,res){
+    var newpost = req.body.newpost;
+    posts.push(newpost);
+    res.redirect("/posts")
 });
 
 app.listen(process.env.PORT, process.env.IP, function(){
